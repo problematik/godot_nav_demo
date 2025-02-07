@@ -1,0 +1,656 @@
+[gd_scene load_steps=10 format=3 uid="uid://dc4cesy5j8wuk"]
+
+[ext_resource type="PackedScene" uid="uid://p61yj2urkql4" path="res://NavBlock1.tscn" id="1_nimll"]
+[ext_resource type="Script" uid="uid://dhrfs12wkd7iy" path="res://nav_test.gd" id="1_wynbm"]
+[ext_resource type="PackedScene" uid="uid://elqpvs66lnny" path="res://NavBlock2.tscn" id="2_8klyw"]
+[ext_resource type="PackedScene" uid="uid://bbno7ft8t6irp" path="res://TestUnit.tscn" id="3_g4i7p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8klyw"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_g4i7p"]
+sky_material = SubResource("ProceduralSkyMaterial_8klyw")
+
+[sub_resource type="Environment" id="Environment_wynbm"]
+background_mode = 2
+sky = SubResource("Sky_g4i7p")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_g4i7p"]
+vertices = PackedVector3Array(-0.5, 1, 3.25, -0.5, 1, -0.25, -2.5, 1, -0.25, -6.25, 1, 3.25, -2.75, 1, -1.5, -0.5, 1, -1.75, -0.5, 1, -5.25, -6.25, 1, -5.25, 8.5, 1, -1.75, 8.5, 1, -5.25, 10.5, 1, -0.25, 8.5, 1, -0.25, 8.5, 1, 3.25, 14.25, 1, 3.25, 10.75, 1, -1.5, 14.25, 1, -5.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(2, 3, 4), PackedInt32Array(4, 3, 7), PackedInt32Array(6, 9, 5), PackedInt32Array(5, 9, 8), PackedInt32Array(11, 10, 12), PackedInt32Array(12, 10, 13), PackedInt32Array(8, 9, 14), PackedInt32Array(14, 9, 15), PackedInt32Array(10, 14, 13), PackedInt32Array(13, 14, 15), PackedInt32Array(1, 11, 0), PackedInt32Array(0, 11, 12)]
+agent_radius = 0.1
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_wynbm"]
+vertices = PackedVector3Array(-2.5, 1, -1.5, -2.5, 1, -0.5, 10.5, 1, -0.5, 10.5, 1, -1.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_radius = 0.0
+
+[node name="NavTest" type="Node3D"]
+script = ExtResource("1_wynbm")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wynbm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 4, 7, 5)
+metadata/_edit_lock_ = true
+
+[node name="TestUnit" parent="." instance=ExtResource("3_g4i7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5, 0)
+metadata/_edit_lock_ = true
+
+[node name="NavOuter" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_g4i7p")
+
+[node name="FloorBlocks1" type="Node3D" parent="NavOuter"]
+
+[node name="StaticBody3D" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="StaticBody3D2" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="StaticBody3D3" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="StaticBody3D4" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="StaticBody3D5" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="StaticBody3D6" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="StaticBody3D7" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+
+[node name="StaticBody3D8" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="StaticBody3D9" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -1)
+
+[node name="StaticBody3D10" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -1)
+
+[node name="StaticBody3D11" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -2)
+
+[node name="StaticBody3D12" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -2)
+
+[node name="StaticBody3D13" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+
+[node name="StaticBody3D14" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+
+[node name="StaticBody3D15" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="StaticBody3D16" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+
+[node name="StaticBody3D17" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+
+[node name="StaticBody3D18" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -2)
+
+[node name="StaticBody3D19" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+
+[node name="StaticBody3D20" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
+
+[node name="StaticBody3D21" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
+
+[node name="StaticBody3D22" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1)
+
+[node name="StaticBody3D23" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+
+[node name="StaticBody3D24" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+
+[node name="StaticBody3D25" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+
+[node name="StaticBody3D26" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+
+[node name="StaticBody3D27" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 1)
+
+[node name="StaticBody3D28" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1)
+
+[node name="StaticBody3D29" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
+
+[node name="StaticBody3D30" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -3)
+
+[node name="StaticBody3D31" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
+
+[node name="StaticBody3D32" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
+
+[node name="StaticBody3D33" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -3)
+
+[node name="StaticBody3D34" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+
+[node name="StaticBody3D35" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -3)
+
+[node name="StaticBody3D36" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -3)
+
+[node name="StaticBody3D37" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="StaticBody3D38" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
+
+[node name="StaticBody3D39" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
+
+[node name="StaticBody3D40" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3)
+
+[node name="StaticBody3D41" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+
+[node name="StaticBody3D42" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 1)
+
+[node name="StaticBody3D43" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 1)
+
+[node name="StaticBody3D44" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 1)
+
+[node name="StaticBody3D45" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+
+[node name="StaticBody3D46" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="StaticBody3D47" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+
+[node name="StaticBody3D48" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="StaticBody3D49" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
+
+[node name="StaticBody3D50" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -2)
+
+[node name="StaticBody3D51" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -2)
+
+[node name="StaticBody3D52" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -2)
+
+[node name="StaticBody3D53" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
+
+[node name="StaticBody3D54" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -3)
+
+[node name="StaticBody3D55" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -3)
+
+[node name="StaticBody3D56" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -3)
+
+[node name="StaticBody3D57" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
+
+[node name="StaticBody3D58" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
+
+[node name="StaticBody3D59" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="StaticBody3D60" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
+
+[node name="StaticBody3D61" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="StaticBody3D62" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+
+[node name="StaticBody3D63" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="StaticBody3D64" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+
+[node name="StaticBody3D65" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="StaticBody3D66" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="StaticBody3D67" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+
+[node name="StaticBody3D68" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="StaticBody3D69" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+
+[node name="StaticBody3D70" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+
+[node name="StaticBody3D71" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="StaticBody3D72" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="StaticBody3D73" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="StaticBody3D74" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 2)
+
+[node name="StaticBody3D75" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="StaticBody3D76" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
+
+[node name="StaticBody3D77" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+
+[node name="StaticBody3D78" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2)
+
+[node name="StaticBody3D79" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
+
+[node name="StaticBody3D80" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
+
+[node name="StaticBody3D81" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+
+[node name="StaticBody3D82" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2)
+
+[node name="StaticBody3D83" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 2)
+
+[node name="StaticBody3D84" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 2)
+
+[node name="StaticBody3D85" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 2)
+
+[node name="StaticBody3D86" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="StaticBody3D87" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+
+[node name="StaticBody3D88" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="StaticBody3D89" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+
+[node name="StaticBody3D90" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 3)
+
+[node name="StaticBody3D91" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
+
+[node name="StaticBody3D92" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+
+[node name="StaticBody3D93" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+
+[node name="StaticBody3D94" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+
+[node name="StaticBody3D95" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+
+[node name="StaticBody3D96" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3)
+
+[node name="StaticBody3D97" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 3)
+
+[node name="StaticBody3D98" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
+
+[node name="StaticBody3D99" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+
+[node name="StaticBody3D100" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 3)
+
+[node name="StaticBody3D101" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 3)
+
+[node name="StaticBody3D102" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
+
+[node name="StaticBody3D103" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
+
+[node name="StaticBody3D104" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
+
+[node name="StaticBody3D105" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="StaticBody3D106" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+
+[node name="StaticBody3D107" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="StaticBody3D108" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
+
+[node name="StaticBody3D109" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+
+[node name="StaticBody3D110" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -4)
+
+[node name="StaticBody3D111" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="StaticBody3D112" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
+
+[node name="StaticBody3D113" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -4)
+
+[node name="StaticBody3D114" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
+
+[node name="StaticBody3D115" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="StaticBody3D116" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -4)
+
+[node name="StaticBody3D117" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -4)
+
+[node name="StaticBody3D118" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -4)
+
+[node name="StaticBody3D119" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -4)
+
+[node name="StaticBody3D120" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+
+[node name="StaticBody3D121" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4)
+
+[node name="StaticBody3D122" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="StaticBody3D123" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
+
+[node name="StaticBody3D124" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5)
+
+[node name="StaticBody3D125" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -5)
+
+[node name="StaticBody3D126" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -5)
+
+[node name="StaticBody3D127" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -5)
+
+[node name="StaticBody3D128" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
+
+[node name="StaticBody3D129" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
+
+[node name="StaticBody3D130" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -5)
+
+[node name="StaticBody3D131" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -5)
+
+[node name="StaticBody3D132" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
+
+[node name="StaticBody3D133" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -5)
+
+[node name="StaticBody3D134" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -5)
+
+[node name="StaticBody3D135" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -5)
+
+[node name="StaticBody3D136" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -5)
+
+[node name="StaticBody3D137" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -5)
+
+[node name="StaticBody3D138" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+
+[node name="StaticBody3D139" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="StaticBody3D140" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -5)
+
+[node name="StaticBody3D141" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
+
+[node name="StaticBody3D142" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -1)
+
+[node name="StaticBody3D143" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -2)
+
+[node name="StaticBody3D144" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 1)
+
+[node name="StaticBody3D145" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
+
+[node name="StaticBody3D146" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 2)
+
+[node name="StaticBody3D147" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 3)
+
+[node name="StaticBody3D148" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -4)
+
+[node name="StaticBody3D149" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -5)
+
+[node name="StaticBody3D150" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0)
+
+[node name="StaticBody3D151" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -1)
+
+[node name="StaticBody3D152" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -2)
+
+[node name="StaticBody3D153" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 1)
+
+[node name="StaticBody3D154" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -3)
+
+[node name="StaticBody3D155" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 2)
+
+[node name="StaticBody3D156" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 3)
+
+[node name="StaticBody3D157" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -4)
+
+[node name="StaticBody3D158" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -5)
+
+[node name="StaticBody3D159" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="StaticBody3D160" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2)
+
+[node name="StaticBody3D161" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)
+
+[node name="StaticBody3D162" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
+
+[node name="StaticBody3D163" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+
+[node name="StaticBody3D164" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 2)
+
+[node name="StaticBody3D165" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+
+[node name="StaticBody3D166" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
+
+[node name="StaticBody3D167" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="StaticBody3D168" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="StaticBody3D169" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+
+[node name="StaticBody3D170" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -1)
+
+[node name="StaticBody3D171" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1)
+
+[node name="StaticBody3D172" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+
+[node name="StaticBody3D173" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
+
+[node name="StaticBody3D174" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+
+[node name="StaticBody3D175" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="StaticBody3D176" parent="NavOuter/FloorBlocks1" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+
+[node name="NavInner" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_wynbm")
+enter_cost = 20.0
+
+[node name="FloorBlocks2" type="Node3D" parent="NavInner"]
+
+[node name="StaticBody3D" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+
+[node name="StaticBody3D2" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="StaticBody3D3" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
+
+[node name="StaticBody3D4" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -1)
+
+[node name="StaticBody3D41" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1)
+
+[node name="StaticBody3D42" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)
+
+[node name="StaticBody3D43" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -1)
+
+[node name="StaticBody3D44" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -1)
+
+[node name="StaticBody3D45" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -1)
+
+[node name="StaticBody3D5" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="StaticBody3D6" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="StaticBody3D7" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="StaticBody3D8" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+
+[node name="Disable" type="Button" parent="."]
+offset_right = 286.0
+offset_bottom = 82.0
+text = "Disable Inner Nav Mesh"
+
+[node name="Enable" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 90.0
+offset_right = 287.0
+offset_bottom = 172.0
+text = "Enable Inner Nav Mesh"
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="EnterCost" type="TextEdit" parent="."]
+offset_left = 995.0
+offset_top = 11.0
+offset_right = 1144.0
+offset_bottom = 56.0
+
+[node name="UpdateEnterCost" type="Button" parent="."]
+offset_left = 785.0
+offset_top = 15.0
+offset_right = 977.0
+offset_bottom = 53.0
+text = "Update Inner enter cost"
+
+[connection signal="pressed" from="Disable" to="." method="_on_disable_pressed"]
+[connection signal="pressed" from="Enable" to="." method="_on_enable_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="UpdateEnterCost" to="." method="_on_update_enter_cost_pressed"]
