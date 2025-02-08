@@ -20,8 +20,6 @@ func _ready() -> void:
 	navigation_agent_3d.velocity_computed.connect(nav_velocity_calculated)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("quit"):
-		get_tree().quit()
 	if event.is_action_pressed("select"):
 		var current_mouse_position: Vector2 = get_viewport().get_mouse_position()
 		navigation_agent_3d.target_position = get_vector3_from_camera_raycast(get_viewport().get_camera_3d(), current_mouse_position)

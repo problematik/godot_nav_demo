@@ -6,16 +6,20 @@ extends Node3D
 @onready var enter_cost: TextEdit = $EnterCost
 
 func _ready() -> void:
-    enter_cost.text = str(nav_inner.enter_cost)
+	enter_cost.text = str(nav_inner.enter_cost)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("quit"):
+		get_tree().quit()
 
 func _on_disable_pressed() -> void:
-    print("disabling inner")
-    NavigationServer3D.region_set_enabled(nav_inner.get_rid(), false)
+	print("disabling inner")
+	NavigationServer3D.region_set_enabled(nav_inner.get_rid(), false)
 
 func _on_enable_pressed() -> void:
-    print("enabling inner")
-    NavigationServer3D.region_set_enabled(nav_inner.get_rid(), true)
+	print("enabling inner")
+	NavigationServer3D.region_set_enabled(nav_inner.get_rid(), true)
 
 func _on_update_enter_cost_pressed() -> void:
-    nav_inner.enter_cost = int(enter_cost.text)
-    print("updated enter cost to ", nav_inner.enter_cost)
+	nav_inner.enter_cost = int(enter_cost.text)
+	print("updated enter cost to ", nav_inner.enter_cost)
