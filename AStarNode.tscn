@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnvldoajjwljv"]
+
+[ext_resource type="Script" uid="uid://benb4n5phdlab" path="res://AStarNode.gd" id="1_om417"]
+
+[node name="AStarSearch" type="Node"]
+script = ExtResource("1_om417")

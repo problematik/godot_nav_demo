@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc4cesy5j8wuk"]
+[gd_scene load_steps=12 format=3 uid="uid://dc4cesy5j8wuk"]
 
 [ext_resource type="PackedScene" uid="uid://p61yj2urkql4" path="res://NavBlock1.tscn" id="1_nimll"]
 [ext_resource type="Script" uid="uid://dhrfs12wkd7iy" path="res://nav_test.gd" id="1_wynbm"]
 [ext_resource type="PackedScene" uid="uid://elqpvs66lnny" path="res://NavBlock2.tscn" id="2_8klyw"]
 [ext_resource type="PackedScene" uid="uid://bbno7ft8t6irp" path="res://TestUnit.tscn" id="3_g4i7p"]
+[ext_resource type="PackedScene" uid="uid://cnvldoajjwljv" path="res://AStarNode.tscn" id="5_q08uq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8klyw"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -28,6 +29,11 @@ vertices = PackedVector3Array(-2.5, 1, -1.5, -2.5, 1, -0.5, 10.5, 1, -0.5, 10.5,
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 agent_radius = 0.0
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_d0kn1"]
+vertices = PackedVector3Array(1.5, 1, -9.5, 1.5, 1, -8.5, 6.5, 1, -8.5, 6.5, 1, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_radius = 0.0
+
 [node name="NavTest" type="Node3D"]
 script = ExtResource("1_wynbm")
 
@@ -36,7 +42,6 @@ environment = SubResource("Environment_wynbm")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 4, 10, 6)
@@ -47,6 +52,7 @@ metadata/_edit_lock_ = true
 
 [node name="NavOuter" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_g4i7p")
+metadata/enter_cost = 0.0
 
 [node name="FloorBlocks1" type="Node3D" parent="NavOuter"]
 
@@ -580,6 +586,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
 [node name="NavInner" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_wynbm")
 enter_cost = 20.0
+metadata/enter_cost = 20.0
 
 [node name="FloorBlocks2" type="Node3D" parent="NavInner"]
 
@@ -622,34 +629,105 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 [node name="StaticBody3D8" parent="NavInner/FloorBlocks2" instance=ExtResource("2_8klyw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
 
-[node name="Disable" type="Button" parent="."]
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AStarNode" parent="." instance=ExtResource("5_q08uq")]
+unique_name_in_owner = true
+
+[node name="NavDisconnected" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_d0kn1")
+
+[node name="StaticBody3D126" parent="NavDisconnected" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -9)
+
+[node name="StaticBody3D127" parent="NavDisconnected" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -9)
+
+[node name="StaticBody3D128" parent="NavDisconnected" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -9)
+
+[node name="StaticBody3D129" parent="NavDisconnected" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -9)
+
+[node name="StaticBody3D132" parent="NavDisconnected" instance=ExtResource("1_nimll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -9)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.995
+offset_right = 12.0
+offset_bottom = -0.280151
+mouse_filter = 1
+
+[node name="HFlowContainer" type="HFlowContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1097.0
+offset_top = -51.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 2
+
+[node name="Disable" type="Button" parent="UI"]
+layout_mode = 0
 offset_right = 286.0
-offset_bottom = 82.0
+offset_bottom = 53.0
 text = "Disable Inner Nav Mesh"
 
-[node name="Enable" type="Button" parent="."]
+[node name="Enable" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 301.0
 offset_top = 4.0
 offset_right = 587.0
-offset_bottom = 86.0
+offset_bottom = 56.0
 text = "Enable Inner Nav Mesh"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="UpdateEnterCost" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 775.0
+offset_top = 4.0
+offset_right = 967.0
+offset_bottom = 61.0
+text = "Update Inner enter cost"
 
-[node name="EnterCost" type="TextEdit" parent="."]
+[node name="EnterCost" type="SpinBox" parent="UI"]
+layout_mode = 0
 offset_left = 995.0
 offset_top = 11.0
 offset_right = 1144.0
 offset_bottom = 56.0
 
-[node name="UpdateEnterCost" type="Button" parent="."]
-offset_left = 785.0
-offset_top = 15.0
-offset_right = 977.0
-offset_bottom = 53.0
-text = "Update Inner enter cost"
+[node name="HFlowContainer2" type="HFlowContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -73.0
+offset_right = 875.0
+offset_bottom = 6.0
+grow_vertical = 0
 
-[connection signal="pressed" from="Disable" to="." method="_on_disable_pressed"]
-[connection signal="pressed" from="Enable" to="." method="_on_enable_pressed"]
+[node name="ToggleGrid" type="Button" parent="UI/HFlowContainer2"]
+custom_minimum_size = Vector2(262, 67)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Toggle grid"
+
+[node name="TogglePolygons" type="Button" parent="UI/HFlowContainer2"]
+custom_minimum_size = Vector2(272, 62)
+layout_mode = 2
+text = "Toggle polygons"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="UpdateEnterCost" to="." method="_on_update_enter_cost_pressed"]
+[connection signal="pressed" from="UI/Disable" to="." method="_on_disable_pressed"]
+[connection signal="pressed" from="UI/Enable" to="." method="_on_enable_pressed"]
+[connection signal="pressed" from="UI/UpdateEnterCost" to="." method="_on_update_enter_cost_pressed"]
+[connection signal="pressed" from="UI/HFlowContainer2/ToggleGrid" to="." method="_on_toggle_grid_pressed"]
+[connection signal="pressed" from="UI/HFlowContainer2/TogglePolygons" to="." method="_on_toggle_polygons_pressed"]

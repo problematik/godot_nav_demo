@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://2p31hr0tndbp"]
+
+[ext_resource type="Script" uid="uid://cmslu7sn2vyei" path="res://custom_point.gd" id="1_odgy1"]
+
+[node name="CustomPoint" type="Node3D"]
+script = ExtResource("1_odgy1")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+text = "POINT POSITION"
