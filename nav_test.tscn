@@ -39,8 +39,7 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 4, 7, 5)
-metadata/_edit_lock_ = true
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 4, 10, 6)
 
 [node name="TestUnit" parent="." instance=ExtResource("3_g4i7p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.5, 0)
@@ -629,10 +628,10 @@ offset_bottom = 82.0
 text = "Disable Inner Nav Mesh"
 
 [node name="Enable" type="Button" parent="."]
-offset_left = 1.0
-offset_top = 90.0
-offset_right = 287.0
-offset_bottom = 172.0
+offset_left = 301.0
+offset_top = 4.0
+offset_right = 587.0
+offset_bottom = 86.0
 text = "Enable Inner Nav Mesh"
 
 [node name="Timer" type="Timer" parent="."]
