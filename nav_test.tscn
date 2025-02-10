@@ -725,6 +725,116 @@ custom_minimum_size = Vector2(272, 62)
 layout_mode = 2
 text = "Toggle polygons"
 
+[node name="FlowContainer" type="FlowContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.966
+anchor_top = 0.014
+anchor_right = 0.966
+anchor_bottom = 0.014
+offset_left = -600.088
+offset_top = -16.076
+offset_right = -20.0881
+offset_bottom = 28.924
+grow_horizontal = 0
+
+[node name="Label2" type="Label" parent="UI/FlowContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Peucker epsilon"
+
+[node name="Epsilon" type="SpinBox" parent="UI/FlowContainer"]
+layout_mode = 2
+step = 0.1
+
+[node name="Label3" type="Label" parent="UI/FlowContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Raycas threshold"
+
+[node name="AngularThreshold" type="SpinBox" parent="UI/FlowContainer"]
+layout_mode = 2
+step = 0.1
+value = 1.0
+
+[node name="ItemList" type="ItemList" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.938
+anchor_top = 0.044
+anchor_right = 0.938
+anchor_bottom = 0.044
+offset_left = -226.984
+offset_top = 37.904
+offset_right = -21.9841
+offset_bottom = 154.904
+grow_horizontal = 0
+allow_search = false
+item_count = 4
+item_0/text = "Custom AStar"
+item_1/text = "Custom + raycast"
+item_2/text = "Custom + peucker"
+item_3/text = "Base AStar"
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.867
+anchor_top = 0.078
+anchor_right = 0.867
+anchor_bottom = 0.078
+offset_left = -221.756
+offset_top = -17.852
+offset_right = -34.7561
+offset_bottom = 19.148
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 20
+text = "What algo to follow"
+
+[node name="AlgoDebug" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.932
+anchor_top = 0.064
+anchor_right = 0.956
+anchor_bottom = 0.4
+offset_left = 0.823975
+offset_top = 2.224
+offset_right = -38.4082
+offset_bottom = -444.6
+grow_horizontal = 0
+
+[node name="CheckButton" type="CheckButton" parent="UI/AlgoDebug"]
+layout_mode = 2
+button_pressed = true
+
+[node name="CheckButton2" type="CheckButton" parent="UI/AlgoDebug"]
+layout_mode = 2
+button_pressed = true
+
+[node name="CheckButton3" type="CheckButton" parent="UI/AlgoDebug"]
+layout_mode = 2
+button_pressed = true
+
+[node name="CheckButton4" type="CheckButton" parent="UI/AlgoDebug"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Label2" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.951
+anchor_top = 0.043
+anchor_right = 0.951
+anchor_bottom = 0.043
+offset_left = -62.0681
+offset_top = -35.162
+offset_right = 50.9319
+offset_bottom = 39.838
+grow_horizontal = 0
+text = "DEBUG ENABLED FOR ALGO"
+autowrap_mode = 2
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/Disable" to="." method="_on_disable_pressed"]
 [connection signal="pressed" from="UI/Enable" to="." method="_on_enable_pressed"]

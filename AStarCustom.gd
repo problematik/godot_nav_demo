@@ -215,14 +215,16 @@ func is_point_in_polygon(point: Vector3, polygon_points: Array) -> bool:
 
 ## returns a dictionary with the path and the points
 ## {
-## 	"path": Array[Vector3],
+## 	"path": PackedVector3Array,
+## 	"simplified_path_peucker": PackedVector3Array,
+## 	"simplified_path_raycast": PackedVector3Array,
 ## 	"start": Vector3,
 ## 	"end": Vector3,
 ##  "start_id": int,
 ##  "end_id": int
 ## }
 
-func get_path_from_point_to_point(from: Vector3, to: Vector3) -> Dictionary:
+func get_path_from_point_to_point(from: Vector3, to: Vector3, epsilon: float = 0.1, angular_threshold: float = 0.99) -> Dictionary:
 	# Snap points to grid
 	var snapped_from = Vector3(
 		round(from.x / cell_size) * cell_size,
@@ -239,6 +241,8 @@ func get_path_from_point_to_point(from: Vector3, to: Vector3) -> Dictionary:
 	if not (snapped_from in point_to_id and snapped_to in point_to_id):
 		return {
 			"path": [],
+			"simplified_path_peucker": [],
+			"simplified_path_raycast": [],
 			"start": snapped_from,
 			"end": snapped_to,
 			"start_id": null,
@@ -250,11 +254,63 @@ func get_path_from_point_to_point(from: Vector3, to: Vector3) -> Dictionary:
 	var path = get_point_path(start_id, end_id)
 	return {
 		"path": path,
+		"simplified_path_peucker": simplify_path_douglas_peucker(path, epsilon),
+		"simplified_path_raycast": simplify_path_raycast(path, angular_threshold),
 		"start": snapped_from,
 		"end": snapped_to,
 		"start_id": start_id,
 		"end_id": end_id
 	}
+
+func simplify_path_raycast(original_path: PackedVector3Array, angular_threshold: float = 0.99) -> PackedVector3Array:
+	var simplified := PackedVector3Array()
+	if original_path.size() < 3:
+		return original_path.duplicate()
+	
+	# Always keep first point
+	simplified.append(original_path[0])
+	var previous_dir := (original_path[1] - original_path[0]).normalized()
+	
+	for i in range(2, original_path.size()):
+		var current_dir := (original_path[i] - original_path[i-1]).normalized()
+		var direction_change := previous_dir.dot(current_dir)
+		
+		# If direction changes significantly, keep the previous point
+		if direction_change < angular_threshold:
+			simplified.append(original_path[i-1])
+			previous_dir = current_dir
+	
+	# Always keep last point
+	simplified.append(original_path[-1])
+	return simplified
+
+func simplify_path_douglas_peucker(path: PackedVector3Array, epsilon: float) -> PackedVector3Array:
+	if path.size() <= 2: return path
+	
+	# Find furthest point from line
+	var dmax := 0.0
+	var index := 0
+	var end := path.size() - 1
+	for i in range(1, end):
+		var d := _perpendicular_distance(path[i], path[0], path[end])
+		if d > dmax:
+			dmax = d
+			index = i
+	
+	# Recursive simplification
+	if dmax > epsilon:
+		var left = simplify_path_douglas_peucker(path.slice(0, index + 1), epsilon)
+		var right = simplify_path_douglas_peucker(path.slice(index, path.size()), epsilon)
+		return left.slice(0, left.size() - 1) + right
+	else:
+		return PackedVector3Array([path[0], path[end]])
+
+func _perpendicular_distance(point: Vector3, line_start: Vector3, line_end: Vector3) -> float:
+	var line_vec := line_end - line_start
+	var point_vec := point - line_start
+	var projection := point_vec.project(line_vec)
+	return (point_vec - projection).length()
+
 func _regions_changed(_rid: RID) -> void:
 	_on_all_regions_updated()
 

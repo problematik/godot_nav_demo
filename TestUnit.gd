@@ -7,6 +7,10 @@ const AStarNode = preload("res://AStarNode.gd")
 
 var navigation_agent_path_to_follow: PackedVector3Array = []
 
+@onready var item_list: ItemList = $"../UI/ItemList"
+@onready var epsilon: SpinBox = $"../UI/FlowContainer/Epsilon"
+@onready var angular_threshold: SpinBox = $"../UI/FlowContainer/AngularThreshold"
+@onready var algo_debug: BoxContainer = $"../UI/AlgoDebug"
 func get_vector3_from_camera_raycast(camera: Camera3D, camera_2D_Coords: Vector2) -> Vector3:
 	var result: Dictionary = fire_raycast_from_camera(camera, camera_2D_Coords)
 
@@ -24,12 +28,12 @@ func fire_raycast_from_camera(camera: Camera3D, camera_2D_Coords: Vector2) -> Di
 func _ready() -> void:
 	navigation_agent_3d.velocity_computed.connect(nav_velocity_calculated)
 
-func create_path_sphere(point: Vector3, is_new: bool = false) -> void:
+func create_path_sphere(point: Vector3, color: Color, selected: bool = false) -> void:
 	var sphere = CSGSphere3D.new()
-	sphere.radius = 0.2
+	sphere.radius = 0.2 if selected else 0.1
 	sphere.position = point
 	sphere.material = StandardMaterial3D.new()
-	sphere.material.albedo_color = Color.GREEN if is_new else Color.BLUE
+	sphere.material.albedo_color = color
 	get_parent().add_child(sphere)
 	sphere.add_to_group("nav_points")
 
@@ -39,23 +43,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		# cast to world position
 		var target_position: Vector3 = get_vector3_from_camera_raycast(get_viewport().get_camera_3d(), current_mouse_position)
 		# get our path
-		var result = astar_node.astar.get_path_from_point_to_point(global_position, target_position)
-		navigation_agent_path_to_follow = result.path
+		var result = astar_node.astar.get_path_from_point_to_point(global_position, target_position, epsilon.value, angular_threshold.value)
+		navigation_agent_path_to_follow = result.simplified_path_raycast
 
-		# Create spheres for each point in the path
-		# but first clear the existing spheres
+		# Clear existing nav points
 		for mesh in get_parent().get_tree().get_nodes_in_group("nav_points"):
 			mesh.queue_free()
-		for point in result.path:
-			create_path_sphere(point, true)
+
+		var selected_idx = item_list.get_selected_items()[0]
+		var paths = []
+		var colors = []
 
 		# now lets get the navigation via the base server
 		var start_position = NavigationServer3D.map_get_closest_point(get_world_3d().navigation_map, global_position)
 		var end_position = NavigationServer3D.map_get_closest_point(get_world_3d().navigation_map, target_position)
-
-		navigation_agent_3d.target_position = navigation_agent_path_to_follow[0]
-
-		# query it
 		var base_path: PackedVector3Array = NavigationServer3D.map_get_path(
 			get_world_3d().navigation_map,  # The navigation map
 			start_position,                 # Starting position
@@ -63,10 +64,41 @@ func _unhandled_input(event: InputEvent) -> void:
 			true,                          # Optimize path (optional)
 			1
 		)
+		
+		# Collect available paths and their corresponding colors
+		if result:
+			paths = [
+				result.path,
+				result.simplified_path_raycast,
+				result.simplified_path_peucker,
+				base_path
+			]
+			colors = [
+				get_parent().navigation_colors["Custom AStar"],
+				get_parent().navigation_colors["Custom + raycast"],
+				get_parent().navigation_colors["Custom + peucker"],
+				get_parent().navigation_colors["Base AStar"]
+			]
+		else:
+			return
 
-		for point in base_path:
-			# create blue spheres
-			create_path_sphere(point, false)
+		match selected_idx:
+				0: navigation_agent_path_to_follow = result.path
+				1: navigation_agent_path_to_follow = result.simplified_path_raycast
+				2: navigation_agent_path_to_follow = result.simplified_path_peucker
+				3: navigation_agent_path_to_follow = base_path
+
+		navigation_agent_3d.target_position = navigation_agent_path_to_follow[0]
+
+		# Create spheres for each path with proper y-offset
+		for i in range(paths.size()):
+			var adjusted_index = (i - selected_idx) % paths.size()
+			if adjusted_index < 0:
+				adjusted_index += paths.size()
+			
+			for point in paths[i]:
+				if algo_debug.get_child(i).button_pressed:
+					create_path_sphere(point + Vector3(0, adjusted_index * 0.3, 0), colors[i], i == selected_idx)
 
 func _process(_delta: float) -> void:
 	if navigation_agent_3d.is_target_reached():

@@ -14,9 +14,28 @@ var showing_polygons: bool = false
 var showing_grid: bool = false
 var selected_regions: Dictionary = {}
 
+var navigation_colors = {
+	"Custom AStar": Color.from_string("#66a61e", Color.WHITE),
+	"Custom + raycast": Color.from_string("#e6ab02", Color.WHITE),
+	"Custom + peucker": Color.from_string("#a6751e", Color.WHITE),
+	"Base AStar": Color.from_string("#666666", Color.WHITE)
+}
+
 func _ready() -> void:
 	add_child(visualizer)
 	enter_cost.value = nav_inner.get_meta("enter_cost", 1.0)
+
+	var icon_size = Vector2(16, 16)
+	var item_list = $UI/ItemList
+	
+	for i in range(item_list.item_count):
+		var image = Image.create(icon_size.x, icon_size.y, false, Image.FORMAT_RGBA8)
+		image.fill(navigation_colors[item_list.get_item_text(i)])
+	
+		var icon_texture = ImageTexture.create_from_image(image)
+		item_list.set_item_icon(i, icon_texture)
+
+	item_list.select(0)
 
 	astar_node.astar.connect("_on_map_updated", func():
 		print("map updated")
